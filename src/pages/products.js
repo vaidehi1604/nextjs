@@ -9,7 +9,7 @@ const products = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       const token =
-        "26124a4732fbefeaaa11410544f23ae6ebfc786361fd4acc82ab90ebfe855b6aa8fc63640575179a26f63744029cabf181c891157e606404f718d25327d6b023ee57101d273206f026081926129ac29694c2bab91841fd6100c454af28824edd07e3963c95f50bed9e9c4577e3d2893c436a338a912dab465d4b0018224d007e";
+        "ef0d20ded0f5b0e7fa2f4900350bc09b1f1c72ba2cfccb541e9b540e65dea5b6dd5cb2d240e90f82cd331811ed6d8a8c70d6d528da3380b07c4cf71d0a38849f702e966ffa30453721d155b8c14501d6a885025c088a1796bee6c2f4ea9d73bf6831b92a11ed583bffaa0427d3683d8484af55e0c680763cf7ef74142898539f";
       const axiosInstance = axios.create({
         headers: { Authorization: `Bearer ${token}` },
       });
