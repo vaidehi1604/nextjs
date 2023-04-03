@@ -1,6 +1,7 @@
 import '@/styles/globals.css'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import Head from 'next/head'
 
 import { useEffect, useState } from "react";
 
@@ -8,6 +9,9 @@ import { useEffect, useState } from "react";
 
 
 export default function App({ Component, pageProps }) {
+  <Head>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0"/>
+  </Head>
   useEffect(() => {
     console.log("i am use effect")
   }, []);
