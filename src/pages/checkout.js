@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from "react";
+import Script from "next/script";
 
+{
+  /* <Script type="application/javascript" src="{HOST}/merchantpgpui/checkoutjs/merchants/{MID}.js" onload="onScriptLoad();" crossorigin="anonymous"></Script> */
+}
 const checkout = ({ cart }) => {
   const [subtotal, setSubTotal] = useState(0);
-  const [form,setForm]=useState({name:" ",email:" ",address:" "})
-  const [name,setName] = useState("")
-  const [email,setEmail] = useState("")
-  const [address,setAddress] = useState("")
+  const [form, setForm] = useState({ name: " ", email: " ", address: " " });
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+  let headers = {
+    Authorization:
+      "Bearer ef0d20ded0f5b0e7fa2f4900350bc09b1f1c72ba2cfccb541e9b540e65dea5b6dd5cb2d240e90f82cd331811ed6d8a8c70d6d528da3380b07c4cf71d0a38849f702e966ffa30453721d155b8c14501d6a885025c088a1796bee6c2f4ea9d73bf6831b92a11ed583bffaa0427d3683d8484af55e0c680763cf7ef74142898539f",
+  };
 
   useEffect(() => {
     console.log(cart);
@@ -15,13 +23,51 @@ const checkout = ({ cart }) => {
       myTotal = myTotal + cart[index][1];
     }
     setSubTotal(myTotal);
-  }, [])
+  }, []);
 
-const handleChange=(e)=>{
-    setForm({...form,name:name,email:email,address:address})
-    console.log({...form,name:name,email:email,address:address});
-}
-
+  const handleChange = (e) => {
+    setForm({ ...form, name: name, email: email, address: address });
+    console.log({ ...form, name: name, email: email, address: address });
+  };
+  const submit = async () => {
+    let orderId = "ORDER" + Math.floor(10000 * Math.random());
+    let otp = "OTP" + Math.floor(1000000 * Math.random());
+    let url = "http://localhost:1337/api/order/pretransaction";
+    console.log("data --->", {
+      orderId: orderId,
+      otp: otp,
+      ...name,
+      ...email,
+      ...address,
+      cart: cart,
+      name,
+      email,
+      address,
+    amount:subtotal
+    });
+    await fetch(url, {
+      mode: "no-cors",
+      method: "POST",
+      body: JSON.stringify({
+        ...name,
+        ...email,
+        ...address,
+        name,
+        email,
+        address,
+        orderId,
+        otp: otp,
+        product: cart,
+        amount:{subtotal}
+      }),
+    })
+      .then((res) => {
+        return res
+      })
+      .catch((err) => {
+        return err
+      });
+  };
 
   return (
     <div>
@@ -32,17 +78,21 @@ const handleChange=(e)=>{
               Checkout
             </h1>
             <h2>cart</h2>
-            <div className="cart">{cart.length?`your cart detalis are as follows`:`Your cart is empty`}</div>
-            <ul className="list-decimal">
+            <div className="cart">
+              {cart.length
+                ? `your cart detalis are as follows:-`
+                : `Your cart is empty`}
+            </div>
+            <ul>
               {cart.map((item) => {
                 return (
                   <li className="px-8">
-                    {item[0]} with a price of {item[1]}
+                    {item[0]} with a price of ₹{item[1]}
                   </li>
                 );
               })}
             </ul>
-            <div className="font-bold">subtotal:{subtotal}</div>
+            <div className="font-bold">subtotal: ₹{subtotal}</div>
           </div>
           <div className="lg:w-1/2 md:w-2/3 mx-auto">
             <div className="flex flex-wrap -m-2">
@@ -52,11 +102,9 @@ const handleChange=(e)=>{
                     Name
                   </label>
                   <input
-                   onChange={(e)=>setName(e.target.value)}
-                   value={name}
-                   type="text"
-                   
-                   
+                    onChange={(e) => setName(e.target.value)}
+                    value={name}
+                    type="text"
                     className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                   />
                 </div>
@@ -70,7 +118,7 @@ const handleChange=(e)=>{
                     Email
                   </label>
                   <input
-                    onChange={(e)=>setEmail(e.target.value)}
+                    onChange={(e) => setEmail(e.target.value)}
                     value={email}
                     type="email"
                     id="email"
@@ -88,8 +136,8 @@ const handleChange=(e)=>{
                     Address
                   </label>
                   <textarea
-                  onChange={(e)=>setAddress(e.target.value)}
-                  value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    value={address}
                     id="message"
                     name="message"
                     className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-900 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
@@ -97,8 +145,11 @@ const handleChange=(e)=>{
                 </div>
               </div>
               <div className="p-2 w-full">
-                <button className="flex mx-auto text-white bg-blue-900 border-0 py-2 px-8 focus:outline-none hover:bg-blue-900 rounded text-lg">
-                  Buy Now
+                <button
+                  onClick={submit}
+                  className="flex mx-auto text-white bg-blue-900 border-0 py-2 px-8 focus:outline-none hover:bg-blue-900 rounded text-lg"
+                >
+                  pay Now
                 </button>
               </div>
               <div className="p-2 w-full pt-8 mt-8 border-t border-gray-200 text-center"></div>
