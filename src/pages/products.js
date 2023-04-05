@@ -31,7 +31,7 @@ const products = (props) => {
           <div className="flex flex-wrap w-full mb-20">
             <div className="lg:w-1/2 w-full mb-6 lg:mb-0">
               <h1 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">
-                Product List{" "}
+                Product List
               </h1>
               <div className="h-1 w-20 bg-indigo-500 rounded"></div>
             </div>
@@ -42,7 +42,10 @@ const products = (props) => {
           <div className="flex flex-wrap -m-4">
             {data &&
               data.map((item) => (
-                <div key={item.attributes.slug} className="xl:w-1/4 md:w-1/2 p-4">
+                <div
+                  key={item.attributes.slug}
+                  className="xl:w-1/4 md:w-1/2 p-4"
+                >
                   <div className="bg-gray-100 p-6 rounded-lg">
                     <img
                       className="h-60 rounded w-full  object-center mb-6"
@@ -69,9 +72,9 @@ const products = (props) => {
                       {item.attributes.description}
                     </p>
                     <Link href={`/products/${item.attributes.slug}`}>
-                    <button className="text-white inline-flex items-center bg-black border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
-                      Buy Now
-                    </button>
+                      <button className="text-white inline-flex items-center bg-black border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
+                        Buy Now
+                      </button>
                     </Link>
                   </div>
                 </div>

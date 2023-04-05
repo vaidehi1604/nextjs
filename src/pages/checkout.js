@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Script from "next/script";
+import { useRouter } from "next/router";
+import Link from 'next/link';
 
-{
-  /* <Script type="application/javascript" src="{HOST}/merchantpgpui/checkoutjs/merchants/{MID}.js" onload="onScriptLoad();" crossorigin="anonymous"></Script> */
-}
 const checkout = ({ cart }) => {
+  const router = useRouter();
   const [subtotal, setSubTotal] = useState(0);
   const [form, setForm] = useState({ name: " ", email: " ", address: " " });
   const [name, setName] = useState("");
@@ -33,39 +32,37 @@ const checkout = ({ cart }) => {
     let orderId = "ORDER" + Math.floor(10000 * Math.random());
     let otp = "OTP" + Math.floor(1000000 * Math.random());
     let url = "http://localhost:1337/api/order/pretransaction";
-    console.log("data --->", {
-      orderId: orderId,
-      otp: otp,
-      ...name,
-      ...email,
-      ...address,
-      cart: cart,
-      name,
-      email,
-      address,
-    amount:subtotal
-    });
+    // console.log("data --->", {
+    //   orderId: orderId,
+    //   otp: otp,
+    //   ...name,
+    //   ...email,
+    //   ...address,
+    //   cart: cart,
+    //   name,
+    //   email,
+    //   address,
+    //   amount:subtotal,
+    // });
     await fetch(url, {
       mode: "no-cors",
       method: "POST",
       body: JSON.stringify({
-        ...name,
-        ...email,
-        ...address,
+        
         name,
         email,
         address,
         orderId,
         otp: otp,
-        product: cart,
-        amount:{subtotal}
+        product:cart,
+        amount:subtotal
       }),
     })
       .then((res) => {
-        return res
+        return res;
       })
       .catch((err) => {
-        return err
+        return err;
       });
   };
 
@@ -86,7 +83,7 @@ const checkout = ({ cart }) => {
             <ul>
               {cart.map((item) => {
                 return (
-                  <li className="px-8">
+                  <li key={Math.random()} className="px-8">
                     {item[0]} with a price of ₹{item[1]}
                   </li>
                 );
@@ -98,7 +95,7 @@ const checkout = ({ cart }) => {
             <div className="flex flex-wrap -m-2">
               <div className="p-2 w-1/2">
                 <div className="relative">
-                  <label for="name" className="leading-7 text-sm text-gray-600">
+                  <label htmlFor="name" className="leading-7 text-sm text-gray-600">
                     Name
                   </label>
                   <input
@@ -112,7 +109,7 @@ const checkout = ({ cart }) => {
               <div className="p-2 w-1/2">
                 <div className="relative">
                   <label
-                    for="email"
+                    htmlFor="email"
                     className="leading-7 text-sm text-gray-600"
                   >
                     Email
@@ -130,7 +127,7 @@ const checkout = ({ cart }) => {
               <div className="p-2 w-full">
                 <div className="relative">
                   <label
-                    for="message"
+                    htmlFor="message"
                     className="leading-7 text-sm text-gray-600"
                   >
                     Address
@@ -147,9 +144,12 @@ const checkout = ({ cart }) => {
               <div className="p-2 w-full">
                 <button
                   onClick={submit}
+                  
                   className="flex mx-auto text-white bg-blue-900 border-0 py-2 px-8 focus:outline-none hover:bg-blue-900 rounded text-lg"
                 >
+                  <Link href="/success">
                   pay Now
+                  </Link>
                 </button>
               </div>
               <div className="p-2 w-full pt-8 mt-8 border-t border-gray-200 text-center"></div>
