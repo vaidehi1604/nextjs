@@ -365,7 +365,7 @@ const About = () => {
             </div>
           </div>
           <button className="flex mx-auto mt-16 text-white bg-blue-900 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">
-           Contact Us
+            Contact Us
           </button>
         </div>
       </section>
