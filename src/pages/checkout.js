@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Link from 'next/link';
+import Link from "next/link";
 
 const checkout = ({ cart }) => {
   const router = useRouter();
@@ -11,15 +11,22 @@ const checkout = ({ cart }) => {
   const [address, setAddress] = useState("");
   let headers = {
     Authorization:
-      "Bearer ef0d20ded0f5b0e7fa2f4900350bc09b1f1c72ba2cfccb541e9b540e65dea5b6dd5cb2d240e90f82cd331811ed6d8a8c70d6d528da3380b07c4cf71d0a38849f702e966ffa30453721d155b8c14501d6a885025c088a1796bee6c2f4ea9d73bf6831b92a11ed583bffaa0427d3683d8484af55e0c680763cf7ef74142898539f",
+      "Bearer 6d29396afd49f3d38034694e43b3c6b01f5619673eef8e8515b5be4e186bdcb71fdc53e4da2eb6a856a7368afffc26b068385915febfc41123eec56fe04e10f4bd1682d6db868074494965089e913bbe0683e4cc0d5c3bfb0df470fe71f06b48ee51524b4580b4ffe33cdeb65e17761e60146d16af6c4204bb161f013df9f00b",
   };
-
+const removeFromCart=(item)=>{
+  
+  let newCart = cart;
+  let index = newCart.indexOf(item);
+  newCart.splice(index);
+  // setSubTotal(0)
+}
   useEffect(() => {
     console.log(cart);
     let myTotal = 0;
     for (let index = 0; index < cart.length; index++) {
       const element = cart[index];
       myTotal = myTotal + cart[index][1];
+      
     }
     setSubTotal(myTotal);
   }, []);
@@ -48,14 +55,13 @@ const checkout = ({ cart }) => {
       mode: "no-cors",
       method: "POST",
       body: JSON.stringify({
-        
         name,
         email,
         address,
         orderId,
         otp: otp,
-        product:cart,
-        amount:subtotal
+        product: cart,
+        amount: subtotal,
       }),
     })
       .then((res) => {
@@ -95,7 +101,10 @@ const checkout = ({ cart }) => {
             <div className="flex flex-wrap -m-2">
               <div className="p-2 w-1/2">
                 <div className="relative">
-                  <label htmlFor="name" className="leading-7 text-sm text-gray-600">
+                  <label
+                    htmlFor="name"
+                    className="leading-7 text-sm text-gray-600"
+                  >
                     Name
                   </label>
                   <input
@@ -144,12 +153,19 @@ const checkout = ({ cart }) => {
               <div className="p-2 w-full">
                 <button
                   onClick={submit}
-                  
-                  className="flex mx-auto text-white bg-blue-900 border-0 py-2 px-8 focus:outline-none hover:bg-blue-900 rounded text-lg"
+                  className="px-5 mx-20  text-white bg-blue-900 border-0 py-2 px-8 focus:outline-none hover:bg-blue-900 rounded text-lg"
                 >
-                  <Link href="/success">
-                  pay Now
-                  </Link>
+                  <Link href="/success">pay Now</Link>
+                </button>
+                {/* onClick={() =>
+                      addToCart(slug, 1, data ? data.attributes.price : null)
+                    } */}
+
+                <button
+                 onClick={()=>removeFromCart(cart,cart ? cart:null)}
+                  className="px-2  mx-15  text-white bg-blue-900 border-0 py-2  focus:outline-none hover:bg-blue-900 rounded text-lg"
+                >
+                  <Link href="">Remove Cart</Link>
                 </button>
               </div>
               <div className="p-2 w-full pt-8 mt-8 border-t border-gray-200 text-center"></div>

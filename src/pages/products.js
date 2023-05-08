@@ -4,12 +4,12 @@ import React from "react";
 import { useEffect, useState } from "react";
 
 const products = (props) => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
       const token =
-        "ef0d20ded0f5b0e7fa2f4900350bc09b1f1c72ba2cfccb541e9b540e65dea5b6dd5cb2d240e90f82cd331811ed6d8a8c70d6d528da3380b07c4cf71d0a38849f702e966ffa30453721d155b8c14501d6a885025c088a1796bee6c2f4ea9d73bf6831b92a11ed583bffaa0427d3683d8484af55e0c680763cf7ef74142898539f";
+        "6d29396afd49f3d38034694e43b3c6b01f5619673eef8e8515b5be4e186bdcb71fdc53e4da2eb6a856a7368afffc26b068385915febfc41123eec56fe04e10f4bd1682d6db868074494965089e913bbe0683e4cc0d5c3bfb0df470fe71f06b48ee51524b4580b4ffe33cdeb65e17761e60146d16af6c4204bb161f013df9f00b";
       const axiosInstance = axios.create({
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -33,7 +33,7 @@ const products = (props) => {
               <h1 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">
                 Product List
               </h1>
-              <div className="h-1 w-20 bg-indigo-500 rounded"></div>
+              <div className="h-1 w-20  bg-gray-500 rounded"></div>
             </div>
             <p className="lg:w-1/2 w-full leading-relaxed text-gray-500">
               Buy the Product from List
@@ -49,30 +49,30 @@ const products = (props) => {
                   <div className="bg-gray-100 p-6 rounded-lg">
                     <img
                       className="h-60 rounded w-full  object-center mb-6"
-                      src={
-                        item.attributes.Image.data &&
-                        item.attributes.Image.data.attributes.url
-                      }
+                      src={`http://localhost:1337${item.attributes.Image.data.attributes.url}`}
                       alt="content"
                     />
                     <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">
                       {item.attributes.slug}
                     </h3>
-                    <h2 className="text-lg text-gray-900 font-medium title-font mb-4">
+                    <h2 className="text-lg text-gray-900 font-medium title-font">
                       {item.attributes.title}
                     </h2>
-                    <div className="hidden bg-red-800 bg-black-800 bg-red-800 bg-pink-800 bg-blue-800 bg-black"></div>
-                    <button
+                    <div>
+                    {item.attributes.price}
+                    </div>
+                    {/* <div className="hidden bg-black bg-red-800 bg-black-800 bg-red-800 bg-pink-800 bg-blue-800 bg-black"></div> */}
+                    {/* <button
                       className={
                         "border-2 border-gray-300 ml-1 rounded-full w-6 h-6 focus:outline-none " +
-                        `bg-${item.attributes.color}-800`
+                        `bg-${item.attributes.color}`
                       }
-                    ></button>
+                    ></button> */}
                     <p className="leading-relaxed text-base">
                       {item.attributes.description}
                     </p>
                     <Link href={`/products/${item.attributes.slug}`}>
-                      <button className="text-white inline-flex items-center bg-black border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
+                      <button className="text-white inline-flex items-center bg-gray-500 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
                         Buy Now
                       </button>
                     </Link>

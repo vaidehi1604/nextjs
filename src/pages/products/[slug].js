@@ -12,7 +12,7 @@ const Slug = ({ addToCart }) => {
       const name = paramsDATA.get("slug");
 
       const token =
-        "ef0d20ded0f5b0e7fa2f4900350bc09b1f1c72ba2cfccb541e9b540e65dea5b6dd5cb2d240e90f82cd331811ed6d8a8c70d6d528da3380b07c4cf71d0a38849f702e966ffa30453721d155b8c14501d6a885025c088a1796bee6c2f4ea9d73bf6831b92a11ed583bffaa0427d3683d8484af55e0c680763cf7ef74142898539f";
+        "6d29396afd49f3d38034694e43b3c6b01f5619673eef8e8515b5be4e186bdcb71fdc53e4da2eb6a856a7368afffc26b068385915febfc41123eec56fe04e10f4bd1682d6db868074494965089e913bbe0683e4cc0d5c3bfb0df470fe71f06b48ee51524b4580b4ffe33cdeb65e17761e60146d16af6c4204bb161f013df9f00b";
       const axiosInstance = axios.create({
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -47,7 +47,8 @@ const Slug = ({ addToCart }) => {
                 <img
                   alt="ecommerce"
                   className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
-                  src={data.attributes.Image.data.attributes.url}
+                  src={`http://localhost:1337${data.attributes.Image.data.attributes.url}`}
+                  // src={data.attributes.Image.data.attributes.url}
                 />
               )}
               <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
@@ -55,7 +56,7 @@ const Slug = ({ addToCart }) => {
                   {data ? data.attributes.title : null}
                 </h2>
                 <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
-                  The Catcher in the Rye
+                 Pink Dress
                 </h1>
 
                 <p className="leading-relaxed">
@@ -65,19 +66,23 @@ const Slug = ({ addToCart }) => {
                   <div className="flex">
                     <span className="mr-3">Color</span>
                     <button className="border-2 border-gray-300 rounded-full w-6 h-6 focus:outline-none"></button>
-                    <button className="border-2 border-gray-300 ml-1 bg-gray-700 rounded-full w-6 h-6 focus:outline-none"></button>
-                    <button className="border-2 border-gray-300 ml-1 bg-blue-900 rounded-full w-6 h-6 focus:outline-none"></button>
+                    <button className="border-2 border-gray-300 ml-1 bg-gray-400 rounded-full w-6 h-6 focus:outline-none"></button>
+                    <button className="border-2 border-gray-300 ml-1 bg-orange-100 rounded-full w-6 h-6 focus:outline-none"></button>
                   </div>
                 </div>
                 <div className="flex">
                   <span className="title-font font-medium text-2xl text-gray-900">
                     ₹{data ? data.attributes.price : null}
                   </span>
-                  <button
+                 
+               
+                </div>
+                <div className="flex" >
+                <button
                     onClick={() =>
                       addToCart(slug, 1, data ? data.attributes.price : null)
                     }
-                    className="flex ml-auto text-white bg-blue-900 border-0 py-2 px-2 focus:outline-none hover:bg-indigo-600 rounded"
+                    className="flex ml-auto text-white bg-gray-500 border-0 py-2 px-2 focus:outline-none hover:bg-indigo-600 rounded"
                   >
                     Add to Cart
                   </button>
@@ -85,7 +90,7 @@ const Slug = ({ addToCart }) => {
                     onClick={() => {
                       router.push("/checkout");
                     }}
-                    className="flex ml-auto text-white bg-blue-900 border-0 py-2 px-2 focus:outline-none hover:bg-indigo-600 rounded"
+                    className="flex ml-auto text-white bg-gray-500 border-0 py-2 px-2 focus:outline-none hover:bg-indigo-600 rounded"
                   >
                     Checkout
                   </button>
